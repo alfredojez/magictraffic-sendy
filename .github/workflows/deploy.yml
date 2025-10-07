@@ -2,7 +2,7 @@ name: Deploy to ECS (Force New Deployment)
 
 on:
   push:
-    branches: [ master ]  # change to your branch if needed
+    branches: [ main ]  # change to your branch if needed
 
 jobs:
   deploy:
