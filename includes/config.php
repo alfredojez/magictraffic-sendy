@@ -4,7 +4,7 @@
 	//----------------------------------------------------------------------------------//
 	
 	/*  Set the URL to your Sendy installation (without the trailing slash) */
-	define('APP_PATH', 'https://9cv23pzkux.us-east-1.awsapprunner.com');
+	define('APP_PATH', 'https://sendy.magictraffic.ai');
 	
 	/*  MySQL database connection credentials (please place values between the apostrophes) */
 	$dbHost = 'mysql.cg7uewgoawxu.us-east-1.rds.amazonaws.com'; //MySQL Hostname
