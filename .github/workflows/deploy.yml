@@ -35,7 +35,7 @@ jobs:
           docker push $IMAGE_URI
 
       - name: Force new ECS deployment
-        run: | 
+        run: |
           aws ecs update-service \
             --cluster ${{ secrets.ECS_CLUSTER }} \
             --service ${{ secrets.ECS_SERVICE }} \
