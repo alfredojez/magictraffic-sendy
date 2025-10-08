@@ -1,6 +1,6 @@
 FROM php:8.1-apache
 
-# Install Sendy required PHP extensions and cron
+# Install Sendy required PHP extensions
 RUN apt-get update && \
     apt-get install -y \
         libzip-dev \
@@ -10,8 +10,7 @@ RUN apt-get update && \
         libonig-dev \
         libxml2-dev \
         libcurl4-openssl-dev \
-        libgettextpo-dev \
-        cron && \
+        libgettextpo-dev && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install -j$(nproc) \
         mysqli \
@@ -63,18 +62,6 @@ RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 777 /var/www/html/uploads && \
     mkdir -p /tmp && chmod -R 777 /tmp
 
-# Add all required Sendy cron jobs
-RUN echo "*/5 * * * * www-data php /var/www/html/scheduled.php > /dev/null 2>&1\n\
-*/1 * * * * www-data php /var/www/html/autoresponders.php > /dev/null 2>&1\n\
-*/1 * * * * www-data php /var/www/html/import-csv.php > /dev/null 2>&1\n\
-*/15 * * * * www-data php /var/www/html/update-segments.php > /dev/null 2>&1" > /etc/cron.d/sendy \
-    && chmod 0644 /etc/cron.d/sendy
-
-# Copy entrypoint script
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
 EXPOSE 80
 
-# Use entrypoint script to start both cron and apache
-CMD ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["apache2-foreground"]
